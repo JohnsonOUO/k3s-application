@@ -73,7 +73,7 @@ make deploy
 ```
 
 ## Deployment
-[](src/1.jpg)
+![](https://i.imgur.com/iJDzbC5.jpg)
 ### xmutil
 we will deploy xmutil pod on kv260
 ```
