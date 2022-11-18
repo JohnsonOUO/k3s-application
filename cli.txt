@@ -57,13 +57,13 @@ git clone https://github.com/Xilinx/Vitis-AI.git
 cp ~/k3s-application/need/* ~/k3s-application/Vitis-AI
 
 ## copy training file
-cp ~/k3s-application/ALLFORDEMO ~/k3s-application/Vitis-AI
+cp -r ~/k3s-application/ALLFORDEMO ~/k3s-application/Vitis-AI
 
 ## copy socket file
 cp ~/k3s-application/vitis/vitis-server.py ~/k3s-application/Vitis-AI
 
 ## Modify volume path to your ~/
-nano ~/k3s-applicatio/deployment/vitis.yaml
+nano ~/k3s-application/deployment/vitis.yaml
 
 ## Create some folder for vitis-deployment
 mkdir /dev/shm
@@ -72,4 +72,4 @@ mkdir /opt/xilinx/dsa
 
 
 ## Deploy
-kubectl apply -f ~/deployment/vitis.yaml
+kubectl apply -f ~/k3s-application/deployment/vitis.yaml

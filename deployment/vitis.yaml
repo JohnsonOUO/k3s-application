@@ -53,11 +53,11 @@ spec:
           type: Directory
       - name: vitis
         hostPath:
-          path: /home/ninox/Desktop/chris/Vitis-AI
+          path: /home/chris/k3s-application/Vitis-AI
           type: Directory
       - name: work
         hostPath: 
-          path: /home/ninox/Desktop/chris/Vitis-AI
+          path: /home/chris/k3s-application/Vitis-AI
           type: Directory
      # - name: socket
      #   hostPath:
