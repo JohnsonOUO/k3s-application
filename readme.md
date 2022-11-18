@@ -27,6 +27,13 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --bind-addres
 ## Deploy nginx
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
 ```
+*back to proxmox*
+```
+## set your iptable
+iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31222 -j DNAT --to 10.20.0.109
+iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31223 -j DNAT --to 10.20.0.109
+iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31225 -j DNAT --to 10.20.0.109
+```
 ## Create a Cluster with kv260
 *Open Master node command line*
 ```
@@ -73,7 +80,9 @@ make deploy
 ```
 
 ## Deployment
-[](src/1.jpg)
+
+We will create xmutil and vitis on k3s.
+![](https://i.imgur.com/iJDzbC5.jpg)
 ### xmutil
 we will deploy xmutil pod on kv260
 ```
