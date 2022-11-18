@@ -1,14 +1,23 @@
 ## Install k3s without traefik
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --bind-address 10.20.0.XXX" K3S_NODE_NAME=master sh -s -
 
+## setup
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+sudo chmod 777 /etc/rancher/k3s/k3s.yaml
+
 ## Deploy nginx
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
+
+#set iptables
+iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31222 -j DNAT --to 10.20.0.109
+iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31223 -j DNAT --to 10.20.0.109
+iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31225 -j DNAT --to 10.20.0.109
 
 ## Copy the node-token
 sudo cat /var/lib/rancher/k3s/server/node-token
 
 ## Install k3s
-curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=<token> K3S_URL=https://10.20.0.1:6443 sh - 
+curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=<token> K3S_URL=https://10.20.0.XXX:6443 sh - 
 
 ## Label the node that we can deploy the pod on a selected node
 kubectl label node worker node-role.kubernetes.io/worker=worker
@@ -31,14 +40,14 @@ chmod 700 get_helm.sh
 
 ## Deploy deivce-plugin
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-cd ~/kv260-k3s
+cd ~/k3s-application/kv260-k3s
 make deploy
 
 ## copy socket file to kv260
-scp -r ~/xmutil petalinux@10.20.0.33:/home/petalinux/
+scp -r ~/k3s-applicatio/xmutil petalinux@10.20.0.33:/home/petalinux/
 
 ## Deploy
-kubectl apply -f ~/deployment/xmutil.yaml
+kubectl apply -f ~/k3s-applicatio/deployment/xmutil.yaml
 
 ## get Vitis-AI
 cd ~/k3s-application
@@ -54,7 +63,7 @@ cp ~/k3s-application/ALLFORDEMO ~/k3s-application/Vitis-AI
 cp ~/k3s-application/vitis/vitis-server.py ~/k3s-application/Vitis-AI
 
 ## Modify volume path to your ~/
-nano ~/deployment/vitis.yaml
+nano ~/k3s-applicatio/deployment/vitis.yaml
 
 ## Create some folder for vitis-deployment
 mkdir /dev/shm

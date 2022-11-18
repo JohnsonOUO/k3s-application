@@ -24,6 +24,10 @@ Because we will use nginx, we can disable traefik first.*
 ## Install k3s without traefik
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --bind-address 10.20.0.XXX" K3S_NODE_NAME=master sh -s -
 
+## setup
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+sudo chmod 777 /etc/rancher/k3s/k3s.yaml
+
 ## Deploy nginx
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
 ```
@@ -43,7 +47,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 *Open Kv260 command line*
 ```
 ## Install k3s
-curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=<token> K3S_URL=https://10.20.0.1:6443 sh - 
+curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=<token> K3S_URL=https://10.20.0.XXX:6443 sh - 
 ```
 *Go back Master command line*
 
@@ -74,8 +78,7 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 
 ## Deploy deivce-plugin
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-cd ~/kv260-k3s
+cd ~/k3s-application/kv260-k3s
 make deploy
 ```
 
@@ -87,10 +90,10 @@ We will create xmutil and vitis on k3s.
 we will deploy xmutil pod on kv260
 ```
 ## copy socket file to kv260
-scp -r ~/xmutil petalinux@10.20.0.33:/home/petalinux/
+scp -r ~/k3s-application/xmutil petalinux@10.20.0.33:/home/petalinux/
 
 ## Deploy
-kubectl apply -f ~/deployment/xmutil.yaml
+kubectl apply -f ~/k3s-applicatio/deployment/xmutil.yaml
 ```
 
 ### vitis-al
@@ -110,7 +113,7 @@ cp ~/k3s-application/ALLFORDEMO ~/k3s-application/Vitis-AI
 cp ~/k3s-application/vitis/vitis-server.py ~/k3s-application/Vitis-AI
 
 ## Modify volume path to your ~/
-nano ~/deployment/vitis.yaml
+nano ~/k3s-applicatio/deployment/vitis.yaml
 
 ## Create some folder for vitis-deployment
 mkdir /dev/shm
@@ -119,5 +122,5 @@ mkdir /opt/xilinx/dsa
 
 
 ## Deploy
-kubectl apply -f ~/deployment/vitis.yaml
+kubectl apply -f ~/k3s-applicatio/deployment/vitis.yaml
 ```
