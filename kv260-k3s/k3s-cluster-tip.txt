@@ -1,0 +1,24 @@
+Master上
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --bind-address 10.20.0.XXX" K3S_NODE_NAME=master sh -s -
+sudo cat /var/lib/rancher/k3s/server/node-token
+
+kv260上
+curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=<token> K3S_URL=https://10.20.0.1:6443 sh - 
+
+Master上
+kubectl label node worker node-role.kubernetes.io/worker=worker
+kubectl label node worker id=worker
+kubectl label node master id=master
+
+
+
+在kv260 跑 device plugin 前
+因為我的邏輯是讀取elc/colas下的檔案數量，所以要
+sudo mkdir /etc/colas
+sudo touch /etc/colas/cola1
+sudo touch /etc/colas/cola1
+
+github from https://github.com/JohnsonOUO/kv260-k3s.git
+(nano Makefile 看指令)
+make deploy
+kubectl apply -f e2e/kv260-runtime.yaml

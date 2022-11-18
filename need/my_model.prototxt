@@ -1,0 +1,18 @@
+model {
+   name : "my_model"
+   kernel {
+     name: "my_model"
+     mean: 123.675
+     mean: 116.28
+     mean: 103.53
+     scale: 0.01712475
+     scale: 0.017507
+     scale: 0.017429
+   }
+   model_type : CLASSIFICATION
+   classification_param {
+      top_k : 1
+      test_accuracy : false
+      preprocess_type : VGG_PREPROCESS
+   }
+}

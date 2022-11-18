@@ -1,0 +1,103 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vitis
+spec:
+  selector:
+    matchLabels:
+      name: vitis-backend
+  template:
+    metadata:
+      labels:
+        name: vitis-backend
+    spec:
+      containers:
+        - name: backend
+          image: xilinx/vitis-ai-cpu:2.5
+          imagePullPolicy: Always
+          #command: ["/bin/bash", "-ce", "tail -f /dev/null"]
+          command: ["python3","/home/workspace/vitis-server.py"]
+          ports:
+            - containerPort: 82
+          #lifecycle:
+           # postStart:
+           #   exec:
+           #     command: ["python3","/home/socket/vitis-server.py"]
+          volumeMounts:
+          - mountPath: /dev/shm
+            name: shm
+          - mountPath: /opt/xilinx/dsa
+            name: dsa
+          - mountPath: /opt/xilinx/overlaybins
+            name: overlay
+          - mountPath: /vitis_ai_home
+            name: vitis
+          - mountPath: /home/workspace
+            name: work
+        #  - mountPath: /home/workspace
+        #    name: socket
+      volumes:
+      - name: shm
+        hostPath:
+          path: /dev/shm
+          type: Directory
+      - name: dsa
+        hostPath:
+          path: /opt/xilinx/dsa
+          type: Directory
+      - name: overlay
+        hostPath:
+          path: /opt/xilinx/overlaybins
+          type: Directory
+      - name: vitis
+        hostPath:
+          path: /home/ninox/Desktop/chris/Vitis-AI
+          type: Directory
+      - name: work
+        hostPath: 
+          path: /home/ninox/Desktop/chris/Vitis-AI
+          type: Directory
+     # - name: socket
+     #   hostPath:
+     #     path: /home/chris/api
+     #     type: Directory
+      nodeSelector:
+        id: master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vitis-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8082
+      protocol: TCP
+      targetPort: 82
+      nodePort: 31223
+  selector:
+    name: vitis-backend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vitis-ingress
+  annotations:
+    k3s.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: vitis.ai.ninox
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: vitis-service
+              port:
+                number: 82

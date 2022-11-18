@@ -1,0 +1,89 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xmutil-app
+spec:
+  selector:
+    matchLabels:
+      name: xmutil-backend
+  template:
+    metadata:
+      labels:
+        name: xmutil-backend
+    spec:
+      containers:
+        - name: xmutil
+          image: chriskewis/kv260-xmutil
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1"
+              myway5.com/cola: 1
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+              myway5.com/cola: 1
+          command: ["python3", "/home/xmutil/xmutil-server.py"] #["/bin/bash", "-ce", "tail -f /dev/null"]
+          ports:
+            - containerPort: 80
+          volumeMounts:
+          - mountPath: /home/xmutil
+            name: xmutil
+          - mountPath: /opt
+            name: video
+          - mountPath: /tmp
+            name: dfx
+      volumes:
+      - name: video
+        hostPath:
+          path: /opt
+          type: Directory
+      - name: dfx
+        hostPath:
+          path: /tmp
+          type: Directory
+      - name: xmutil
+        hostPath:
+          path: /home/petalinux/xmutil
+          type: Directory
+      nodeSelector:
+        id: worker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xmutil-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 80
+      nodePort: 31222
+  selector:
+    name: xmutil-backend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: xmutil-ingress
+  annotations:
+    k8s.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kv260.xmutil.ninox
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: xmutil-service
+              port:
+                number: 80
