@@ -80,11 +80,8 @@ make deploy
 ```
 
 ## Deployment
-<<<<<<< HEAD
 
 We will create xmutil and vitis on k3s.
-=======
->>>>>>> 7848c0839203fc29d7a5167ce64d720a0db7f5e6
 ![](https://i.imgur.com/iJDzbC5.jpg)
 ### xmutil
 we will deploy xmutil pod on kv260
