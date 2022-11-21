@@ -13,7 +13,7 @@ else
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
     echo "Find node-token"
     echo "sudo cat /var/lib/rancher/k3s/server/node-token"
-    token=$(<config.txt) #/var/lib/rancher/k3s/server/node-token
+    token=$(</var/lib/rancher/k3s/server/node-token) #/var/lib/rancher/k3s/server/node-token
     echo "Please access remote compute and input the following command:"
     echo "################################# COPY THIS COMMAND #############################################"
     echo "curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=$token K3S_URL=https://$1:6443 sh - "
