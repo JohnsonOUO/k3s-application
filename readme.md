@@ -93,7 +93,7 @@ we will deploy xmutil pod on kv260
 scp -r ~/k3s-application/xmutil petalinux@10.20.0.33:/home/petalinux/
 
 ## Deploy
-kubectl apply -f ~/k3s-applicatio/deployment/xmutil.yaml
+kubectl apply -f ~/k3s-application/deployment/xmutil.yaml
 ```
 
 ### vitis-al
