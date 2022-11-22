@@ -16,6 +16,7 @@ Those are what we want do.*
 ## Enviroment
 * Master node is Ubuntu20.04 on Proxmox
 * Worker node is Ubuntu20.04.3 on Kria-kv260
+* k3s version: 1.25.3+k3s1
 
 ## Install k3s on Master node and deploy nginx ingress
 *Open the command line on Master.
