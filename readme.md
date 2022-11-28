@@ -18,6 +18,9 @@ Those are what we want do.*
 * Worker node is Ubuntu20.04.3 on Kria-kv260
 * k3s version: 1.25.3+k3s1
 
+## Quick Start
+*Open Quick.md*
+
 ## Install k3s on Master node and deploy nginx ingress
 *Open the command line on Master.
 Because we will use nginx, we can disable traefik first.*
@@ -87,6 +90,7 @@ make deploy
 
 We will create xmutil and vitis on k3s.
 ![](https://i.imgur.com/iJDzbC5.jpg)
+(This picture let you easily to understand our structure ,but it is not total correct.)
 ### xmutil
 we will deploy xmutil pod on kv260
 ```
