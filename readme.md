@@ -90,7 +90,7 @@ make deploy
 
 We will create xmutil and vitis on k3s.
 ![](https://i.imgur.com/iJDzbC5.jpg)
-(This picture let you easily to understand our structure ,but it is not total correct.)
+(This picture let you easily to understand our structure ,but it is not totally correct.)
 ### xmutil
 we will deploy xmutil pod on kv260
 ```
