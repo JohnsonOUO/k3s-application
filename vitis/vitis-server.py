@@ -6,17 +6,17 @@ import struct
 import json
 import os
 
-phone = socket.socket(socket.AF_INET,socket.SOCK_STREAM) #买手机
+phone = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
 phone.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
-phone.bind(('0.0.0.0',82)) #绑定手机卡
-phone.listen(5) #阻塞的最大数
+phone.bind(('0.0.0.0',82)) 
+phone.listen(5) 
 print('start runing.....')
-while True: #链接循环
-    coon,addr = phone.accept() # 等待接电话
+while True: 
+    coon,addr = phone.accept() 
     print(coon,addr)
-    while True: #通信循环
-        # 收发消息
-        cmd = coon.recv(1024) #接收的最大数
+    while True: 
+        
+        cmd = coon.recv(1024) 
         print(cmd.decode('utf-8'))
         #cmd = cmd.decode('utf-8').split()
         print('接收的是：%s',cmd)
