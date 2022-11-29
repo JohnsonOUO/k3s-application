@@ -2,7 +2,7 @@
 
 if [ ! -n "$1"  ]; then
     echo "Please put ~ at the end"
-
+fi
 echo "get Vitis-AI"
 cd $1/k3s-application
 git clone https://github.com/Xilinx/Vitis-AI.git

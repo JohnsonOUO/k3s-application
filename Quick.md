@@ -3,6 +3,14 @@ We will use less command to run our system.
 Before we start it, we need install some tools.
 * Curl 
 * Git
+* make
+
+### Increase Disk Size
+```
+parted /dev/mmcblk1 resizepart 2
+## Yes -> 100%
+resize2fs /dev/mmcblk1p2
+```
 
 ### clone repository.
 We need get our file first.
@@ -16,6 +24,7 @@ In this shell script, I will disable traefik and modify our k3s settting.
 ```
 # copy the last line and work on worker
 sudo ./master1.sh 10.20.0.109
+# If output has file not exist, mkdir file and do again.
 ```
 ### Set resource for device-plugin
 **On worker**

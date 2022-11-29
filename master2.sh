@@ -2,7 +2,7 @@
 
 if [ ! -n "$1"  ]; then
     echo "Please put ~ at the end"
-
+fi
 echo "Label the node that we can deploy the pod on a selected node"
 kubectl label node worker node-role.kubernetes.io/worker=worker
 kubectl label node worker id=worker
@@ -18,7 +18,8 @@ if [ ! -n "$check" ]; then
     rm get_helm.sh
     echo "install helm finish"
 fi
-echo "deploy device plugin"
+echo 'deploy device plugin'
 cd $1/k3s-application/kv260-k3s
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 make deploy
-echo "deploy finish"
+echo 'deploy finish'
