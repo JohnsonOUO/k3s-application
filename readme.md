@@ -49,6 +49,12 @@ iptables -t nat -A PREROUTING -i wlp3s0 -p tcp --dport 31225 -j DNAT --to 10.20.
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 *Open Kv260 command line*
+*Increase Disk Size First*
+```
+parted /dev/mmcblk1 resizepart 2
+## Yes -> 100%
+resize2fs /dev/mmcblk1p2
+```
 ```
 ## Install k3s
 curl -sfL https://get.k3s.io | K3S_NODE_NAME=worker K3S_TOKEN=<token> K3S_URL=https://10.20.0.XXX:6443 sh - 
