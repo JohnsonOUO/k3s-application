@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  namespace: ingress-nginx
+data:
+  8080: "default/xmutil-service:8080"
+  8082: "default/vitis-service:8082"

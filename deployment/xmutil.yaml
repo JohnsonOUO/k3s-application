@@ -57,13 +57,13 @@ kind: Service
 metadata:
   name: xmutil-service
 spec:
-  type: NodePort
+  type: ClusterIP #NodePort
   ports:
-    - name: http
+    - name: socket #http
       port: 8080
       protocol: TCP
       targetPort: 80
-      nodePort: 31222
+      #nodePort: 31222
   selector:
     name: xmutil-backend
 ---

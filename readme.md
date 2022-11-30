@@ -129,3 +129,10 @@ mkdir /opt/xilinx/dsa
 ## Deploy
 kubectl apply -f ~/k3s-applicatio/deployment/vitis.yaml
 ```
+### ingress setting
+https://zhuanlan.zhihu.com/p/297910145
+
+```
+kubectl apply -f ~/k3s-application/config.yaml
+## more step see this document
+```

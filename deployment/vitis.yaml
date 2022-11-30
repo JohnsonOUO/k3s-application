@@ -71,13 +71,13 @@ kind: Service
 metadata:
   name: vitis-service
 spec:
-  type: NodePort
+  type: ClusterIP #NodePort
   ports:
-    - name: http
+    - name: socket #http
       port: 8082
       protocol: TCP
       targetPort: 82
-      nodePort: 31223
+      #nodePort: 31223
   selector:
     name: vitis-backend
 ---
